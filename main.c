@@ -2,30 +2,37 @@
 #include <VL6180X.h>
 #include <Servo.h>
 
-VL6180X sensor;
-int distance;
-Servo servo;
+VL6180X sensor1;
+Servo servo1;
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
-  servo.attach(A1);
-  
+
   Wire.begin();
-  sensor.init();
-  sensor.configureDefault();
-  sensor.setTimeout(500);
-  sensor.setAddress(0x29);
+
+  sensor1.init();
+  servo1.attach(A1);
+
+  sensor1.configureDefault();
+  sensor1.setTimeout(500);
+  sensor1.setAddress(0x29);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  distance = sensor.readRangeSingle();
-  int position = map(distance, 10, 200, 0, 180);
-  servo.write(position);
-  int speed = map(distance, 10, 200, 10, 100);
-  servo.writeMicroseconds(1500);
-  servo.writeMicroseconds(1500 + speed);
+  // measure distance with sensor
+  int distance = sensor1.readRangeSingle();
+
+  // check if there is an obstacle within a certain distance
+  if (distance < 100) {
+    servo1.write(180);
+  } else {
+    servo1.write(0);
+  }
+
+  // print sensor reading to serial monitor
+  Serial.print("Distance: ");
   Serial.println(distance);
-  delay(100);
+
+  // wait a short amount of time before measuring again
+  delay(50);
 }
