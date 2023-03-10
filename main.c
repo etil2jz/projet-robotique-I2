@@ -51,14 +51,14 @@ void loop() {
   // Obtenir la valeur des capteurs de distance
   int distance1 = sensor1.readRangeSingle(), distance2 = sensor2.readRangeSingle(), distance3 = sensor3.readRangeSingle();
 
-  // check if there is an obstacle within a certain distance
-  //if (distance1 < 100 && distance2 < 100) {
-  //  servo1.write(180);
-  //  servo2.write(0);  
-  //} else {
-  //  servo1.write(90);
-  //  servo2.write(90);
-  //}
+  // Contrôler les moteurs en fonction des obstacles
+  if (distance1 < 100 && distance2 < 100 && distance3 < 100) {
+    servo1.write(90); // de 91 à 180 -> marche arrière, réciproque vraie ;; 90 = arrêt
+    servo2.write(90);  
+  } else {
+    servo1.write(0);
+    servo2.write(0);
+  }
 
   // Débuggage capteurs de distance
   Serial.print("Distance1: ");
