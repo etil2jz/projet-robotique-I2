@@ -4,7 +4,7 @@
 
 VL6180X sensor1, sensor2, sensor3; // Déclaration des 3 capteurs
 Servo servo1, servo2; // Déclaration des 2 servomoteurs
-int distance1, distance2, distance3; // Déclaration des 3 variables de distance
+unsigned char distance1, distance2, distance3; // Déclaration des 3 variables de distance
 
 void setup() {
   // Initialiser la communication Serial et I2C
@@ -14,7 +14,7 @@ void setup() {
   Wire.setClock(400000); // 400 kHz
 
   // Passer les lignes D2, D3 et D4 en état bas
-  for (int i = 2; i < 5; i++) {
+  for (unsigned char i = 2; i < 5; i++) {
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
     delay(10);
